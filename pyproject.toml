@@ -1,0 +1,58 @@
+[project]
+name = "mujoco-dog-like-robot-labs"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "mujoco>=3.8.0",
+    "numpy>=2.4.0",
+    "onnxruntime>=1.26.0",
+    "pyyaml>=6.0.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.10",
+    "ty>=0.0.9",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+extend-exclude = ["artifacts", "migrations/versions", "typings", "vendor"]
+target-version = "py314"
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812",  # Ruff formatter may conflict with this rule
+    "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107",  # Missing docstring is ok
+    "D203",  # Conflicting with D211 which is preferred
+    "D212",  # Conflicting with D213 which is preferred
+    "EM101", "EM102",  # Inline exception messages keep small lab code readable
+    "E402",  # Sometimes module definitions not at top of the file is ok
+    "FBT001", "FBT002",  # Boolean positional args are ok
+    "FIX002",  # TODO markers are ok while the project is still taking shape
+    "INP001",  # Namespace packages are ok
+    "PLR0913", "PLR0915",  # Simulator/controller entry points naturally have several parameters and steps
+    "PLR2004",  # Numeric constants are physical/simulation parameters in lab code
+    "RET504",  # Assignments before return can improve code readability
+    "RUF001",  # Russian letters are ok
+    "T201",  # Lab scripts intentionally print short student-facing summaries
+    "TD002", "TD003",  # TODO comments do not need author names or issue links
+    "TRY003",  # Have no desire to create custom exception classes when there are suitable default ones, lol
+]
+
+[tool.ruff.format]
+line-ending = "lf"
+docstring-code-format = true
+quote-style = "double"
+indent-style = "space"
+
+[tool.ty.environment]
+extra-paths = ["typings"]
+
+[tool.ty.src]
+exclude = ["artifacts/**", "vendor/**"]
